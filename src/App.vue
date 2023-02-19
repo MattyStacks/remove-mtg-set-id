@@ -1,15 +1,27 @@
 <template>
   <div class="container">
-    <h1>Remove Short MTG Set ID</h1>
-    <p>I built this to just get the card numbers and the names, and pull out the short list id.</p>
+    <h1 class="mdc-typography--headline1">Remove MTG Edition From Card List</h1>
+
+    <h2 class="mdc-typography--headline1">Instructions:</h2>
+    <p>Paste your list with your editions into the text box. Then it will remove the edition from the output.</p>
     <div class="input-container">
-      <label for="input-field" class="input-label">Input List:</label>
-      <textarea v-model="inputList" id="input-field" class="input-field" rows="5" placeholder="Enter a list of strings..."></textarea>
+      <label for="input-field" class="mdc-typography--subtitle1">Input List:</label>
+      <textarea v-model="inputList" id="input-field" class="mdc-text-field__input" rows="5" placeholder="Enter a list of strings..." spellcheck="false"></textarea>
     </div>
-    <button @click="removeParentheses" class="button">Submit</button>
+    <button @click="removeParentheses" class="mdc-button mdc-button--raised">
+      <span class="mdc-button__label">Submit</span>
+    </button>
     <div class="output-container">
-      <label for="output-field" class="output-label">Output List:</label>
-      <textarea v-model="modifiedList" id="output-field" class="output-field" rows="5" placeholder="Modified list will appear here..." readonly></textarea>
+      <label for="output-field" class="mdc-typography--subtitle1">Output List:</label>
+      <textarea v-model="modifiedList" id="output-field" class="mdc-text-field__input" rows="5" placeholder="Modified list will appear here..." readonly spellcheck="false"></textarea>
+      <div class="button-container">
+        <button v-if="modifiedList" @click="copyToClipboard" class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg">
+          <span class="mdc-button__label">Copy to Clipboard</span>
+        </button>
+        <button v-if="modifiedList" @click="exportToFile" class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg">
+          <span class="mdc-button__label">Export to File</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -18,83 +30,55 @@
 export default {
   data() {
     return {
-      inputList: '',
-      modifiedList: ''
-    }
+      inputList: "",
+      modifiedList: "",
+    };
   },
   methods: {
     removeParentheses() {
       // Split the input list into an array of strings
-      const list = this.inputList.split('\n');
+      const list = this.inputList.split("\n");
 
       // Remove the parentheses from each string in the list
       const updatedList = list.map((string) => {
-        return string.replace(/\s*\(.*?\)/g, '');
+        return string.replace(/\s*\(.*?\)/g, "");
       });
 
       // Join the modified list into a single string
-      this.modifiedList = updatedList.join('\n');
-    }
-  }
-}
-</script>
+      this.modifiedList = updatedList.join("\n");
+    },
+    copyToClipboard() {
+      const el = document.createElement("textarea");
+      el.value = this.modifiedList;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+    },
+    exportToFile() {
+      const now = new Date();
+      const dateString = now.toISOString().split("T")[0];
+      const timeString = now.toTimeString().split(" ")[0].replace(/:/g, "-");
+      const filename = `modified_list_${dateString}_${timeString}.txt`;
 
+      const data = new Blob([this.modifiedList], { type: "text/plain" });
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    },
+  },
+};
+</script>
+<style>
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url('https://unpkg.com/@material/typography/mdc-typography.min.css');
+@import url('https://unpkg.com/@material/textfield/mdc-text-field.min.css');
+@import url('https://unpkg.com/@material/button/mdc-button.min.css');
+</style>
 <style scoped>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-.container {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-.input-container {
-  margin-bottom: 20px;
-}
-.input-label {
-  display: block;
-  margin-bottom: 5px;
-}
-.input-field {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-}
-.output-container {
-  margin-top: 20px;
-}
-.output-label {
-  display: block;
-  margin-bottom: 5px;
-}
-.output-field {
-  width: 100%;
-  height: 200px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-}
-.button {
-  display: block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.button:hover {
-  background-color: #0062cc;
-}
 /* Styles go here */
 </style>
