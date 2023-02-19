@@ -23,6 +23,7 @@
         </button>
       </div>
     </div>
+    <div id="snackbar">Copied to clipboard</div>
   </div>
 </template>
 
@@ -47,14 +48,32 @@ export default {
       // Join the modified list into a single string
       this.modifiedList = updatedList.join("\n");
     },
-    copyToClipboard() {
-      const el = document.createElement("textarea");
-      el.value = this.modifiedList;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
-    },
+    // copyToClipboard() {
+    //   const el = document.createElement("textarea");
+    //   el.value = this.modifiedList;
+    //   document.body.appendChild(el);
+    //   el.select();
+    //   document.execCommand("copy");
+    //   document.body.removeChild(el);
+    // },
+    copyToClipboard(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'absolute';
+  textarea.style.left = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+
+  // Show toast notification
+  const snackbar = document.getElementById('snackbar');
+  snackbar.className = 'show';
+  setTimeout(() => {
+    snackbar.className = snackbar.className.replace('show', '');
+  }, 3000);
+},
     exportToFile() {
       const now = new Date();
       const dateString = now.toISOString().split("T")[0];
