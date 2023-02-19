@@ -34,6 +34,8 @@
   border-radius: 4px;
   box-sizing: border-box;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  min-height: 12em;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
 .mdc-text-field__input:focus {
@@ -68,6 +70,8 @@
 }
 
 .mdc-button--raised {
+  margin-right: 10px;
+  margin-bottom: 10px;
   background-color: #1e88e5;
   color: #fff;
 }
@@ -81,6 +85,8 @@
 }
 
 .mdc-button--unelevated {
+  margin-right: 10px;
+  margin-bottom: 10px;
   background-color: #fff;
   color: #fff;
   /* color: #1e88e5; */
@@ -103,4 +109,7 @@
 .button-container {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  
 }
