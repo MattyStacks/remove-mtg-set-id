@@ -87,6 +87,15 @@ export default {
       el.select();
       document.execCommand("copy");
       document.body.removeChild(el);
+      if (document.queryCommandSupported("copy")) {
+        const tooltip = document.createElement("div");
+        tooltip.classList.add("tooltip");
+        tooltip.textContent = "Copied to clipboard";
+        document.body.appendChild(tooltip);
+        setTimeout(() => {
+          tooltip.remove();
+        }, 1000);
+      }
     },
     exportToFile() {
       const now = new Date();
