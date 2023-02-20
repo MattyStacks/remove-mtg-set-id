@@ -3,22 +3,56 @@
     <h1 class="mdc-typography--headline5">Remove MTG Edition From Card List</h1>
 
     <h2 class="mdc-typography--headline6">Instructions:</h2>
-    <p>Paste your list with your editions into the text box. Then it will remove the edition from the output.</p>
+    <p>
+      Paste your list with your editions into the text box. Then it will remove
+      the edition from the output.
+    </p>
     <div class="input-container">
-      <label for="input-field" class="mdc-typography--subtitle1">Input List:</label>
-      <textarea v-model="inputList" id="input-field" class="mdc-text-field__input" rows="5" placeholder="Enter a list of strings..." spellcheck="false"></textarea>
+      <label for="input-field" class="mdc-typography--subtitle1"
+        >Input List:</label
+      >
+      <textarea
+        v-model="inputList"
+        id="input-field"
+        class="mdc-text-field__input"
+        rows="5"
+        placeholder="Enter a list of strings..."
+        spellcheck="false"
+        ref="inputBox"
+      ></textarea>
     </div>
     <button @click="removeParentheses" class="mdc-button mdc-button--raised">
       <span class="mdc-button__label">Submit</span>
     </button>
+    <button class="mdc-button mdc-button--raised" @click="clearList">
+      Clear List
+    </button>
     <div class="output-container">
-      <label for="output-field" class="mdc-typography--subtitle1">Output List:</label>
-      <textarea v-model="modifiedList" id="output-field" class="mdc-text-field__input" rows="5" placeholder="Modified list will appear here..." readonly spellcheck="false"></textarea>
+      <label for="output-field" class="mdc-typography--subtitle1"
+        >Output List:</label
+      >
+      <textarea
+        v-model="modifiedList"
+        id="output-field"
+        class="mdc-text-field__input"
+        rows="5"
+        placeholder="Modified list will appear here..."
+        readonly
+        spellcheck="false"
+      ></textarea>
       <div class="button-container">
-        <button v-if="modifiedList" @click="copyToClipboard" class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg">
+        <button
+          v-if="modifiedList"
+          @click="copyToClipboard"
+          class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg"
+        >
           <span class="mdc-button__label">Copy to Clipboard</span>
         </button>
-        <button v-if="modifiedList" @click="exportToFile" class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg">
+        <button
+          v-if="modifiedList"
+          @click="exportToFile"
+          class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg"
+        >
           <span class="mdc-button__label">Export to File</span>
         </button>
       </div>
@@ -57,23 +91,23 @@ export default {
     //   document.body.removeChild(el);
     // },
     copyToClipboard(text) {
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'absolute';
-  textarea.style.left = '-9999px';
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand('copy');
-  document.body.removeChild(textarea);
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
 
-  // Show toast notification
-  const snackbar = document.getElementById('snackbar');
-  snackbar.className = 'show';
-  setTimeout(() => {
-    snackbar.className = snackbar.className.replace('show', '');
-  }, 3000);
-},
+      // Show toast notification
+      const snackbar = document.getElementById("snackbar");
+      snackbar.className = "show";
+      setTimeout(() => {
+        snackbar.className = snackbar.className.replace("show", "");
+      }, 3000);
+    },
     exportToFile() {
       const now = new Date();
       const dateString = now.toISOString().split("T")[0];
@@ -88,16 +122,21 @@ export default {
       link.click();
       window.URL.revokeObjectURL(url);
     },
+    clearList() {
+      this.inputList = "";
+      this.modifiedList = "";
+      this.$refs.inputBox.value = "";
+    },
   },
 };
 </script>
 <style>
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 /* @import url('https://unpkg.com/@material/typography/mdc-typography.min.css');
 @import url('https://unpkg.com/@material/textfield/mdc-text-field.min.css');
 @import url('https://unpkg.com/@material/button/mdc-button.min.css'); */
-@import url('https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css');
+@import url("https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css");
 </style>
 <style scoped>
 /* Styles go here */
