@@ -133,9 +133,6 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
-/* @import url('https://unpkg.com/@material/typography/mdc-typography.min.css');
-@import url('https://unpkg.com/@material/textfield/mdc-text-field.min.css');
-@import url('https://unpkg.com/@material/button/mdc-button.min.css'); */
 @import url("https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css");
 </style>
 <style scoped>
