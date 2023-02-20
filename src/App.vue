@@ -3,22 +3,55 @@
     <h1 class="mdc-typography--headline5">Remove MTG Edition From Card List</h1>
 
     <h2 class="mdc-typography--headline6">Instructions:</h2>
-    <p>Paste your list with your editions into the text box. Then it will remove the edition from the output.</p>
+    <p>
+      Paste your list with your editions into the text box. Then it will remove
+      the edition from the output.
+    </p>
     <div class="input-container">
-      <label for="input-field" class="mdc-typography--subtitle1">Input List:</label>
-      <textarea v-model="inputList" id="input-field" class="mdc-text-field__input" rows="5" placeholder="Enter a list of strings..." spellcheck="false"></textarea>
+      <label for="input-field" class="mdc-typography--subtitle1"
+        >Input List:</label
+      >
+      <textarea
+        v-model="inputList"
+        id="input-field"
+        class="mdc-text-field__input"
+        rows="5"
+        placeholder="Enter a list of strings..."
+        spellcheck="false"
+      ></textarea>
     </div>
     <button @click="removeParentheses" class="mdc-button mdc-button--raised">
       <span class="mdc-button__label">Submit</span>
     </button>
+    <button @click="resetFields" class="mdc-button mdc-button--raised">
+      <span class="mdc-button__label">Reset</span>
+    </button>
     <div class="output-container">
-      <label for="output-field" class="mdc-typography--subtitle1">Output List:</label>
-      <textarea v-model="modifiedList" id="output-field" class="mdc-text-field__input" rows="5" placeholder="Modified list will appear here..." readonly spellcheck="false"></textarea>
+      <label for="output-field" class="mdc-typography--subtitle1"
+        >Output List:</label
+      >
+      <textarea
+        v-model="modifiedList"
+        id="output-field"
+        class="mdc-text-field__input"
+        rows="5"
+        placeholder="Modified list will appear here..."
+        readonly
+        spellcheck="false"
+      ></textarea>
       <div class="button-container">
-        <button v-if="modifiedList" @click="copyToClipboard" class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg">
+        <button
+          v-if="modifiedList"
+          @click="copyToClipboard"
+          class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg"
+        >
           <span class="mdc-button__label">Copy to Clipboard</span>
         </button>
-        <button v-if="modifiedList" @click="exportToFile" class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg">
+        <button
+          v-if="modifiedList"
+          @click="exportToFile"
+          class="mdc-button mdc-button--raised mdc-button--unelevated mdc-theme--primary-bg"
+        >
           <span class="mdc-button__label">Export to File</span>
         </button>
       </div>
@@ -69,14 +102,18 @@ export default {
       link.click();
       window.URL.revokeObjectURL(url);
     },
+    resetFields() {
+      this.inputList = "";
+      this.modifiedList = "";
+    },
   },
 };
 </script>
 <style>
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 
-@import url('https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css');
+@import url("https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css");
 </style>
 <style scoped>
 /* Styles go here */
